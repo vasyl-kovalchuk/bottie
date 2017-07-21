@@ -29,6 +29,11 @@
   ],
   "CreatePR": [
     "createPR",
-    "create presentation"
+    "create presentation",
+    "create presentation",
+    "make presentation",
+    "new presentation",
+    "make slides",
+    "create slides"  
   ]
 }
