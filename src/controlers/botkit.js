@@ -16,7 +16,7 @@ var Bottie = {
 var customPhrasesText;
 var customPhrases;
 try {
-    customPhrasesText = fs.readFileSync(__dirname + '/custom-phrases.json').toString();
+    customPhrasesText = fs.readFileSync(__dirname + '/../../custom-phrases.json').toString();
 } catch (err) {
     throw new Error('Uh oh, Bottie could not find the ' +
         'custom-phrases.json file, did you move it?');
@@ -36,7 +36,7 @@ Bottie.Brain.think();
 console.log('DFM Assitant finished learning, time to listen...');
 Bottie.Ears
     .listen()
-    .hear('TRAINING TIME!!!', function (speech, message) {
+    .hear('!TRAIN', function (speech, message) {
         console.log('Delegating to on-the-fly training module...');
         Train(Bottie.Brain, speech, message);
     })
@@ -57,32 +57,32 @@ Bottie.Ears
             });
         }
     }).hear(['test button'], function (bot, message) {
-    var testButtonReply = {
-        username: 'Button Bot',
-        text: 'This is a test message with a button',
-        replace_original: 'true',
-        attachments: [
-            {
-                fallback: "fallback text",
-                callback_id: '123',
-                attachment_type: 'default',
-                title: 'message title',
-                text: 'message content',
-                color: '#0075C7',
-                actions: [
-                    {
-                        "name": "button name",
-                        "text": "button text",
-                        "type": "button",
-                        "value": "whatever you want to pass into the interactive_message_callback"
-                    }
-                ]
-            }
-        ],
-        icon_url: 'http://14379-presscdn-0-86.pagely.netdna-cdn.com/wp-content/uploads/2014/05/ButtonButton.jpg'
+        var testButtonReply = {
+            username: 'Button Bot',
+            text: 'This is a test message with a button',
+            replace_original: 'true',
+            attachments: [
+                {
+                    fallback: "fallback text",
+                    callback_id: '123',
+                    attachment_type: 'default',
+                    title: 'message title',
+                    text: 'message content',
+                    color: '#0075C7',
+                    actions: [
+                        {
+                            "name": "button name",
+                            "text": "button text",
+                            "type": "button",
+                            "value": "whatever you want to pass into the interactive_message_callback"
+                        }
+                    ]
+                }
+            ],
+            icon_url: 'http://14379-presscdn-0-86.pagely.netdna-cdn.com/wp-content/uploads/2014/05/ButtonButton.jpg'
 
-    };
-    bot.reply(message, testButtonReply);
+        };
+        bot.reply(message, testButtonReply);
 }).on("interactive_message_callback", function (bot, message) {
     // These 3 lines are used to parse out the id's
     var ids = message.callback_id.split(/\-/);

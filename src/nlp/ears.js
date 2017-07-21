@@ -10,15 +10,15 @@ if (!process.env.SLACK_ID || !process.env.SLACK_SECRET || !process.env.PORT) {
 
 class Ears {
 
-    _bots = {};
-
-    scopes = [
-        'direct_mention',
-        'direct_message',
-        'mention'
-    ];
-
     constructor() {
+
+        this._bots = {};
+
+        this.scopes = [
+            'direct_mention',
+            'direct_message',
+            'mention'
+        ];
 
         this.controller = BotKit.slackbot({
             debug: false,
@@ -40,11 +40,11 @@ class Ears {
 
     _setupWebServer() {
         // Setup for the Webserver - REQUIRED FOR INTERACTIVE BUTTONS
-        this.controller.setupWebserver(process.env.port, (err,webserver)=> {
+        this.controller.setupWebserver(process.env.PORT, (err,webserver)=> {
 
-            this.controller.createWebhookEndpoints(controller.webserver);
+            this.controller.createWebhookEndpoints(this.controller.webserver);
 
-            this.controller.createOauthEndpoints(controller.webserver, (err,req,res) =>{
+            this.controller.createOauthEndpoints(this.controller.webserver, (err,req,res) =>{
                 if (err) {
                     res.status(500).send('ERROR: ' + err);
                 } else {
@@ -73,9 +73,9 @@ class Ears {
             if (this._bots[bot.config.token]) {
                 // already online! do nothing.
             } else {
-                bot.startRTM(function(err) {
+                bot.startRTM((err) => {
                     if (!err) {
-                        trackBot(bot);
+                        this._trackBot(bot);
                     }
                     bot.startPrivateConversation({user: config.createdBy},function(err,convo) {
                         if (err) {
@@ -117,6 +117,7 @@ class Ears {
                 }
             }
         });
+        return this;
 
     }
 
