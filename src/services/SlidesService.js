@@ -18,12 +18,13 @@ class SlidesService {
         this.db = db;
     }
 
-    writeSlidesTemplate(version,date){
+    //version.name , version.releasedDate
+    writeSlidesTemplate(version, issues){
         return new Promise(function (resolve,reject) {
             fs.writeFile(`res/slides.md`, "" +
                 "---\n" +
                 "# This is a title slide\n" +
-                "##Version " + version +"\n"+
+                "##Version " + version.name +"\n"+
                 "---\n"+
                 "---\n" +
                 "![](https://image.ibb.co/cf2S75/bg.png){.background}\n" +
