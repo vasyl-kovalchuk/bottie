@@ -2,12 +2,6 @@
 
 var BotKit = require('botkit');
 
-// Check for ENV variables - Required to be a slack app to use interactive buttons
-if (!process.env.SLACK_ID || !process.env.SLACK_SECRET || !process.env.PORT) {
-    console.log('Error: Specify clientId clientSecret and port in environment');
-    process.exit(1);
-}
-
 class Ears {
 
     constructor() {
@@ -24,7 +18,7 @@ class Ears {
             debug: false,
             interactive_replies: true, // tells botkit to send button clicks into conversations
             json_file_store: './config/',
-            redirectUrl: process.env.SLACK_REDIRECT,
+            redirectUri: process.env.SLACK_REDIRECT,
         }).configureSlackApp(
             {
                 clientId: process.env.SLACK_ID,
@@ -33,14 +27,15 @@ class Ears {
                 scopes: ['bot', 'incoming-webhook', 'team:read', 'users:read', 'users.profile:read', 'channels:read', 'im:read', 'im:write', 'groups:read', 'emoji:read', 'chat:write:bot'],
             }
         );
-        this._setupWebServer();
         this._listenRtm();
         this._listenBotCreation();
     }
 
-    _setupWebServer() {
+    setupWebServer(callback) {
         // Setup for the Webserver - REQUIRED FOR INTERACTIVE BUTTONS
         this.controller.setupWebserver(process.env.PORT, (err,webserver)=> {
+
+            callback(webserver);
 
             this.controller.createWebhookEndpoints(this.controller.webserver);
 
@@ -52,6 +47,7 @@ class Ears {
                 }
             });
         });
+        return this;
 
     }
 
@@ -63,7 +59,7 @@ class Ears {
 
         this.controller.on('rtm_close',function(bot) {
             console.log('** The RTM api just closed');
-            // you may want to attempt to re-open
+            // you may want to attempt to re-open 
         });
     }
 
