@@ -1,2 +1,3 @@
 const Store = require("jfs");
-let db = new Store("./../../config/presentations")
+let dbPresentation = new Store("./../../config/presentations.json");
+let dbSceduler = new Store("./../../config/scheduler.json");
