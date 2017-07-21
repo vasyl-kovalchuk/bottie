@@ -1,5 +1,5 @@
-# bottie
-##Simple BotKit bot with NLP
+# dfm assitent
+##Slack bot with NLP for Demo Feature Meetings 
 
 ###*Original blog post avaliable on Andrew Templeton's blog:* 
 
@@ -24,7 +24,7 @@ If you're here on **GitHub**, you already know what to do. Navigate to the downl
 
 
 <br><br>
-##**Step 3** - Learn and build on the bottie code
+##**Step 3** - Learn and build on the dfm assistant code
 To learn how to interact and use the Bot, [read Andrews blog post](
 http://blog.templeton.host/self-training-nlp-enabled-slack-bot-tutorial/). It's a great starting point for those looking to build / extend a bot to fit their project needs.  
 
