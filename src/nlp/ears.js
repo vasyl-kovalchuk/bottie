@@ -20,7 +20,7 @@ class Ears {
 
     constructor() {
 
-        this.controller = Botkit.slackbot({
+        this.controller = BotKit.slackbot({
             debug: false,
             interactive_replies: true, // tells botkit to send button clicks into conversations
             json_file_store: './config/',
@@ -124,6 +124,11 @@ class Ears {
         this.controller.hears(pattern, this.scopes, callback);
         return this;
     };
+
+    on(event, cb) {
+        this.controller.on(event, cb);
+        return this;
+    }
 
 }
 
