@@ -5,6 +5,7 @@ var fs = require('fs');
 var Train = require('./src/nlp/train');
 var Brain = require('./src/nlp/brain');
 var Ears = require('./src/nlp/ears');
+var ServiceProvider = require('./src/services/ServiceProvider');
 var builtinPhrases = require('./builtins');
 
 var routes = require("./src/routes/routes");
@@ -13,7 +14,8 @@ dotenv.load();
 
 var Bottie = {
     Brain: new Brain(),
-    Ears: new Ears()
+    Ears: new Ears(),
+    Services: new ServiceProvider()
 };
 
 var customPhrasesText;
@@ -44,6 +46,7 @@ eachKey(customPhrases, Bottie.Teach);
 eachKey(builtinPhrases, Bottie.Teach);
 Bottie.Brain.think();
 console.log('DFM Assitant finished learning, time to listen...');
+
 Bottie.Ears
     .setupWebServer((webserver)=>{
         // view engine ejs
@@ -62,7 +65,7 @@ Bottie.Ears
         console.log('DFM Assitant interpretation: ', interpretation);
         if (interpretation.guess) {
             console.log('Invoking skill: ' + interpretation.guess);
-            Bottie.Brain.invoke(interpretation.guess, interpretation, speech, message);
+            Bottie.Brain.invoke(interpretation.guess, interpretation, speech, message, Bottie.Services);
         } else {
             speech.reply(message, 'Hmm... I don\'t have a response what you said... I\'ll save it and try to learn about it later.');
             // speech.reply(message, '```\n' + JSON.stringify(interpretation) + '\n```');

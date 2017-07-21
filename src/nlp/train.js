@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 
-var CUSTOM_PHRASE_LOC = __dirname + '/../custom-phrases.json';
+var CUSTOM_PHRASE_LOC = __dirname + '../../custom-phrases.json';
 
 module.exports = Train;
 

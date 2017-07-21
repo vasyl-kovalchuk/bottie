@@ -8,13 +8,13 @@ const JIRA_ISSUES_FILTER = "project = %s AND issuetype in standardIssueTypes() A
 
 class JiraService {
 
-    constructor(jiraConfig) {
+    constructor() {
         this.jiraApi = new JiraApi(
             "https",
             "lvserv01.logivations.com",
             443,
-            jiraConfig.username,
-            jiraConfig.password,
+            process.env.JIRA_USER_NAME,
+            process.env.JIRA_PASSWORD,
             "latest"
         );
     }

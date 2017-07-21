@@ -23,7 +23,7 @@ Brain.prototype.think = function() {
   this.classifier.train();
 
   // save the classifier for later use
-  var aPath = './classifier.json';
+  var aPath = './src/nlp/classifier.json';
   this.classifier.save(aPath, function(err, classifier) {
     // the classifier is saved to the classifier.json file!
     console.log('Writing: Creating a Classifier file in SRC.');
@@ -41,7 +41,7 @@ Brain.prototype.interpret = function(phrase) {
   };
 };
 
-Brain.prototype.invoke = function(skill, info, bot, message) {
+Brain.prototype.invoke = function(skill, info, bot, message, serviceProvider) {
   var skillCode;
   
   // check the sentiment 
@@ -59,7 +59,7 @@ Brain.prototype.invoke = function(skill, info, bot, message) {
     throw new Error('The invoked skill doesn\'t exist!');
   }
   console.log('Running skill code for ' + skill + '...');
-  skillCode(skill, info, bot, message, senti);
+  skillCode(skill, info, bot, message, senti, serviceProvider);
   return this;
 };
 
