@@ -4,7 +4,7 @@
 var fs = require('fs');
 
 var Train = require('../nlp/train');
-var Brain = require('../nlp//brain');
+var Brain = require('../nlp/brain');
 var Ears = require('../nlp/ears');
 var builtinPhrases = require('../../builtins');
 
