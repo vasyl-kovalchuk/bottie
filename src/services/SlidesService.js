@@ -21,20 +21,20 @@ class SlidesService {
     //version.name , version.releasedDate
     writeSlidesTemplate(version, issues){
 
-
+        let issuesToShow = issues.slice(0,5);
         let issueString = "";
         let issueSlides = "";
         let i = 1;
-        issues.forEach(issue => {
-            issueString += "\n" + i + ". " + issue.summary + " (" + issue.id + ") " + " assignee - " + issue.developer;
+        issuesToShow.forEach(issue => {
+            issueString += "\n" + i + ". " + issue.summary + " (" + issue.id + ") " + " by " + issue.developer;
             issueSlides += "\n---\n ![](https://image.ibb.co/cf2S75/bg.png){.background}\n #<span style=\"color:whitesmoke\"> </span>                                                    \n<span>                                                       </span><span style=\"text-decoration:underline;color:blue\">WMO-"+issue.id+"</span>                  \n"+
                 "<span><b>        "+issue.summary+"</b> </span>                     \n"+
-                "<span>                                        assignee: "+issue.developer+"</span>\n             "
+                "<span>                                        by "+issue.developer+"</span>\n             "
             i++;
         });
 
         return new Promise((resolve, reject)=> {
-            fs.writeFile('res/slides.md', "---\n![](https://image.ibb.co/cf2S75/bg.png){.background}\n# :heart_eyes_cat:                                        Demo Feature Meeting\n##<span>Version " + version.name + "                                                          Date " + version.releasedDate + "                                                        </span>" +
+            fs.writeFile('res/slides.md', "---\n![](https://image.ibb.co/cf2S75/bg.png){.background}\n# :heart_eyes_cat:                                        Demo Feature Meeting\n##<span>Version " + version.name + "                                                          Date " + version.releaseDate + "                                                        </span>" +
                 "\n---\n" +
                 "![](https://image.ibb.co/cFsnqQ/bg.png){.background}\n" +
                 "#<span style=\"color:green\">                    Demo Feature Meeting v." + version.name + "</span>\n" +
