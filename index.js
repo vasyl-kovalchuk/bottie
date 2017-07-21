@@ -17,7 +17,7 @@ dotenv.load();
 var Bottie = {
     Brain: new Brain(),
     Ears: new Ears(),
-    Services: new ServiceProvider()
+    Services: new ServiceProvider(db)
 };
 
 var customPhrasesText;
@@ -68,7 +68,7 @@ Bottie.Ears
         console.log('DFM Assitant interpretation: ', interpretation);
         if (interpretation.guess) {
             console.log('Invoking skill: ' + interpretation.guess);
-            Bottie.Brain.invoke(interpretation.guess, interpretation, speech, message, db, Bottie.Services);
+            Bottie.Brain.invoke(interpretation.guess, interpretation, speech, message, Bottie.Services);
         } else {
             speech.reply(message, 'Hmm... I don\'t have a response what you said... I\'ll save it and try to learn about it later.');
             // speech.reply(message, '```\n' + JSON.stringify(interpretation) + '\n```');
