@@ -16,7 +16,6 @@ class Ears {
 
         this.controller = BotKit.slackbot({
             debug: false,
-            storage: undefined,
             interactive_replies: true, // tells botkit to send button clicks into conversations
             json_file_store: './config/',
             redirectUri: process.env.SLACK_REDIRECT,
