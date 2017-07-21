@@ -26,5 +26,12 @@
     "backup yourself",
     "commit to git",
     "Backup"
+  ],
+  "CreatePR": [
+    "createPR",
+    "create presentation"
+  ],
+  "CreatePr": [
+    "create presentation"
   ]
 }

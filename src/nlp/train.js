@@ -1,8 +1,7 @@
 "use strict";
 
 var fs = require('fs');
-
-var CUSTOM_PHRASE_LOC = __dirname + '../../custom-phrases.json';
+var path = require("path")
 
 module.exports = Train;
 
@@ -45,6 +44,7 @@ function Train(Brain, speech, message) {
             convo.say('Great, now let me think about that...');
             Brain.teach(phraseName, phraseExamples);
             Brain.think();
+            convo.next();
             writeSkill(phraseName, phraseExamples, function(err) {
               if (err) {
                 return convo.say('Shoot, something went wrong while I was trying ' +
@@ -52,7 +52,6 @@ function Train(Brain, speech, message) {
               }
               convo.say('All done! You should try seeing if I understood now!');
             });
-            convo.next();
           }
         },
         {
@@ -70,7 +69,7 @@ function Train(Brain, speech, message) {
 
 function writeSkill(name, vocab, callback) {
   console.log('About to write files for a new empty phrase/skill type...');
-  fs.readFile(CUSTOM_PHRASE_LOC, function(err, data) {
+  fs.readFile(path.join(__dirname, '../../', 'custom-phrases.json'), function(err, data) {
     if (err) {
       console.error('Error loading custom phrase JSON into memory.');
       return callback(err);
@@ -79,14 +78,14 @@ function writeSkill(name, vocab, callback) {
     var customPhrases = JSON.parse(data.toString());
     customPhrases[name] = vocab;
     console.log('About to serialize and write new phrase object...');
-    fs.writeFile(CUSTOM_PHRASE_LOC, JSON.stringify(customPhrases, null, 2), function(err) {
+    fs.writeFile(path.join(__dirname, '../../', 'custom-phrases.json'), JSON.stringify(customPhrases, null, 2), function(err) {
       if (err) {
         console.error('Error while writing new serialized phrase object.');
         return callback(err);
       }
       console.log('Writing updated phrase JSON finished, copying empty.skill.js...');
-      var emptySkillStream = fs.createReadStream(__dirname + '../../empty.skill.js');
-      var writeStream = fs.createWriteStream(__dirname + '../../skills/' + name + '.js');
+      var emptySkillStream = fs.createReadStream(path.join(__dirname, 'empty.skill.js'));
+      var writeStream = fs.createWriteStream(path.join(__dirname, '../../skills/', `${name}.js`));
       emptySkillStream.pipe(writeStream);
       emptySkillStream.on('error', callback);
       writeStream.on('error', callback);

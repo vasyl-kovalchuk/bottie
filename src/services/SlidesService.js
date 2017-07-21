@@ -10,12 +10,13 @@ const issues = [
         developer:"Volodymyr Khoma"
     }
 
-]
-
-
-
+];
 
 class SlidesService {
+
+    constructor(db) {
+        this.db = db;
+    }
 
     writeSlidesTemplate(version,date){
         return new Promise(function (resolve,reject) {

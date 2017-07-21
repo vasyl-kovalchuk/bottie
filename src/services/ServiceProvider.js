@@ -11,4 +11,4 @@ class ServiceProvider {
 
 }
 
-module.exports.default = ServiceProvider;
+module.exports = ServiceProvider;
