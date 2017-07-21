@@ -4,26 +4,26 @@ module.exports = function(skill, info, bot, message, senti, services) {
 
     bot.reply(message, "Retrieving Jira Versions. Please wait...");
     bot.startConversation(message, function(err, convo) {
-        var fixVersion, jiraIssues;
+        var fixVersion;
         services.jiraService.getAllVersions().then((versions)=>{
-
-            convo.ask({
+            convo.say({
                 text: "Here is the list of fix versions",
                 attachments: versions.map((version)=>({
                     "title": version.name,
-                    "text": version.releasedDate,
+                    "text": version.releaseDate,
                     "mrkdwn_in": [
                         "text",
                         "pretext"
                     ]
                 }))
-            }, [
+            });
+            convo.ask("Please type one...", [
                 {
                     pattern: ".*",
-                    callback: function(response, convo) {
-                        fixVersion = versions.find(version=>version.name==response.text);
+                    callback: function (response, convo) {
+                        fixVersion = versions.find(version => version.name == response.text);
                         convo.say(`Right, I\'ll fetch issues by Fix Version ${fixVersion.name}. Please wait...`);
-                        services.jiraService.findDFMIssues(fixVersion.name).then((issues)=>{
+                        services.jiraService.findDFMIssues(fixVersion.name).then((issues) => {
                             convo.say({
                                 text: "Here is the list of issues.",
                                 attachments: issues.map((issue) => ({
@@ -42,8 +42,11 @@ module.exports = function(skill, info, bot, message, senti, services) {
                                             {
                                                 pattern: '^yes$',
                                                 callback: function (response, convo) {
-                                                    bot.replyPublic(message, `Hi All! Here is the link for the next DFM \n Please follow the link below ${link} \nSpeakers, feel free to fill the slides`);
-                                                    convo.next();
+                                                    bot.say({
+                                                        text: `Hi All! Here is the link for the next DFM on ${fixVersion.releasedDate} \n Please follow the link below ${link} \nSpeakers, feel free to fill the slides`,
+                                                        channel: ''
+                                                    });
+                                                    convo.next()
                                                 }
                                             },
                                             {
@@ -64,7 +67,7 @@ module.exports = function(skill, info, bot, message, senti, services) {
                                     convo.say('See you next time!');
                                     convo.next();
                                 }
-                            }])
+                            }]);
                             convo.next();
                         });
                     }

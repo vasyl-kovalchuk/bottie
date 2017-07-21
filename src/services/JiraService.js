@@ -38,7 +38,7 @@ class JiraService {
                             key: issue.key,
                             title_link: `https://lvserv01.logivations.com/browse/${issue.key}`,
                             summary: issue.fields.summary,
-                            developer: "Volodymyr Khoma"
+                            developer: issue.fields.assignee.displayName
                         })));
                     }
                 })
