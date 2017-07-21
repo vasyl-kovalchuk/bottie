@@ -47,6 +47,8 @@
     "share presentation",
     "send presentation",
     "share slides",
-    "refer presentation"
+    "refer presentation",
+    "send DFM",
+    "share DFM"
   ]
 }
