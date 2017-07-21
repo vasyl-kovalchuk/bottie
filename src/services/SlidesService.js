@@ -33,7 +33,7 @@ class SlidesService {
             i++;
         });
 
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject)=> {
             fs.writeFile('res/slides.md', "---\n![](https://image.ibb.co/cf2S75/bg.png){.background}\n# :heart_eyes_cat:                                        Demo Feature Meeting\n##<span>Version " + version.name + "                                                          Date " + version.releasedDate + "                                                        </span>" +
                 "\n---\n" +
                 "![](https://image.ibb.co/cFsnqQ/bg.png){.background}\n" +

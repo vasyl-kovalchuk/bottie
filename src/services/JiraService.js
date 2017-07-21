@@ -33,23 +33,16 @@ class JiraService {
                     if (error) {
                         reject(error)
                     } else {
-                        var issues = response.issues.map(issue=>({
+                        resolve(response.issues.map(issue=>({
                             id: issue.id,
-                            title: "TEST",
-                            title_link: this.buildIssueLink(issue.key),
+                            key: issue.key,
+                            title_link: `https://lvserv01.logivations.com/browse/${issue.key}`,
                             summary: issue.fields.summary,
-                            // description: issues.fields.description
-                        }));
-                        resolve(issues);
+                            developer: "Volodymyr Khoma"
+                        })));
                     }
                 })
         });
-    }
-
-    buildIssueLink(issueKey) {
-        let base = '/browse/';
-        // Strip preceeding and trailing forward slash
-        return `https://lvserv01.logivations.com/browse/${base}`;
     }
 
     getAllVersions() {

@@ -6,7 +6,7 @@ class ServiceProvider {
 
     constructor(db) {
         this.jiraService = new JiraService(db);
-        this.slidesSlides = new SlidesService(db);
+        this.slides = new SlidesService(db);
     }
 
 }

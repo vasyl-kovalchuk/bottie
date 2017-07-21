@@ -24,12 +24,11 @@ module.exports = function(skill, info, bot, message, senti, services) {
                         fixVersion = versions.find(version=>version.name==response.text);
                         convo.say(`Right, I\'ll fetch issues by Fix Version ${fixVersion.name}. Please wait...`);
                         services.jiraService.findDFMIssues(fixVersion.name).then((issues)=>{
-
                             convo.say({
                                 text: "Here is the list of issues.",
                                 attachments: issues.map((issue) => ({
                                     "pretext": issue.summary,
-                                    "title": issue.title,
+                                    "title": issue.key,
                                     "title_link": issue.title_link
                                 }))
                             });
@@ -43,7 +42,7 @@ module.exports = function(skill, info, bot, message, senti, services) {
                                             {
                                                 pattern: '^yes$',
                                                 callback: function (response, convo) {
-
+                                                    bot.replyPublic(message, `Hi All! Here is the link for the next DFM \n Please follow the link below ${link} \nSpeakers, feel free to fill the slides`);
                                                     convo.next();
                                                 }
                                             },
