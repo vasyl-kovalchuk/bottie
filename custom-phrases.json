@@ -34,6 +34,19 @@
     "make presentation",
     "new presentation",
     "make slides",
-    "create slides"  
+    "create slides"
+  ],
+  "hello": [
+    "hi",
+    "hello",
+    "good day",
+    "greetings",
+    "welcome"
+  ],
+  "sharePR": [
+    "share presentation",
+    "send presentation",
+    "share slides",
+    "refer presentation"
   ]
 }
