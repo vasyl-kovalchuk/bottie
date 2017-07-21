@@ -25,28 +25,34 @@ class JiraService {
         });
     }
 
-    findDFMIssues() {
+    findDFMIssues(fixVersion) {
         var self = this;
         return new Promise((resolve, reject) => {
-            self.getActiveSprintVersion().then(function (sprint) {
-                self.jiraApi.searchJira(util.format(JIRA_ISSUES_FILTER, DEFAULT_PROJECT, DEFAULT_LABEL, sprint),
-                    ["summary", "status", "assignee", "description", "changelog"], function (error, response) {
-                        if (error) {
-                            reject(error)
-                        } else {
-                            var issues = response.issues.map((issue)=>{
-                                return {
-                                    id: issue.id,
-                                    link: issue.self + "?expand=changelog)",
-                                    summary: issue.fields.summary,
-                                    // description: issues.fields.description
-                                };
-                            });
-                            resolve(issues)
-                        }
-                    })
-            })
+            self.jiraApi.searchJira(util.format(JIRA_ISSUES_FILTER, DEFAULT_PROJECT, DEFAULT_LABEL, fixVersion),
+                ["summary", "status", "assignee", "description", "changelog"], function (error, response) {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        var issues = response.issues.map((issue)=>{
+                            return {
+                                id: issue.id,
+                                title: "TEST",
+                                title_link: issue.self + "?expand=changelog",
+                                summary: issue.fields.summary,
+                                // description: issues.fields.description
+                            };
+                        });
+                        resolve(issues);
+                    }
+                })
         });
+    }
+
+    buildIssueLink (issueKey) {
+        let base = '/browse/';
+            // Strip preceeding and trailing forward slash
+            base = `https://lvserv01.logivations.com/browse/${base}`;
+        return `${this.config.jira.protocol}://${this.config.jira.host}:${this.config.jira.port}${base}${issueKey}`;
     }
 
     getAllVersions() {
@@ -55,7 +61,7 @@ class JiraService {
                 if (error) {
                     reject(error)
                 } else {
-                    resolve(versions)
+                    resolve(versions.slice(Math.max(versions.length - 7, 1)))
                 }
             })
         });
