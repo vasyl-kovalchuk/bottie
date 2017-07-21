@@ -85,8 +85,8 @@ function writeSkill(name, vocab, callback) {
         return callback(err);
       }
       console.log('Writing updated phrase JSON finished, copying empty.skill.js...');
-      var emptySkillStream = fs.createReadStream(__dirname + '/empty.skill.js');
-      var writeStream = fs.createWriteStream(__dirname + '/../skills/' + name + '.js');
+      var emptySkillStream = fs.createReadStream(__dirname + '../../empty.skill.js');
+      var writeStream = fs.createWriteStream(__dirname + '../../skills/' + name + '.js');
       emptySkillStream.pipe(writeStream);
       emptySkillStream.on('error', callback);
       writeStream.on('error', callback);
