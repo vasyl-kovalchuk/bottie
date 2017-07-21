@@ -30,20 +30,20 @@
   },
   "homepage": "https://github.com/andrew-templeton/bottie#readme",
   "dependencies": {
-    "botkit": "0.0.5",
-    "elizabot": "0.0.2",
-    "natural": "^0.2.1",
-    "request": "2.75.0",
-    "sentiment": "2.1.0",
     "body-parser": "^1.17.2",
+    "botkit": "0.0.5",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.6",
+    "elizabot": "0.0.2",
     "express": "^4.15.3",
     "jira": "^0.9.2",
     "md2gslides": "^0.3.0",
     "mongodb": "^2.2.30",
     "monk": "^6.0.1",
+    "natural": "^0.2.1",
+    "request": "2.75.0",
     "rock-paper-spock": "0.0.1",
+    "sentiment": "2.1.0",
     "simple-git": "1.50.0"
   }
 }
