@@ -8,7 +8,7 @@ module.exports = function(skill, info, bot, message, senti, services) {
         services.jiraService.getAllVersions().then((versions)=>{
 
             convo.ask({
-                text: "Here is the list of fix versions. Please type one of them!",
+                text: "Here is the list of fix versions",
                 attachments: versions.map((version)=>({
                     "title": version.name,
                     "text": version.releasedDate,
@@ -21,18 +21,19 @@ module.exports = function(skill, info, bot, message, senti, services) {
                 {
                     pattern: ".*",
                     callback: function(response, convo) {
-                        fixVersion = versions.find((version)=>{version.name==response.text});
-                        convo.say(`Right, I\'ll fetch issues by Fix Version ${fixVersion}. Please wait...`);
-                        services.jiraService.findDFMIssues(fixVersion).then((issues)=>{
+                        fixVersion = versions.find(version=>version.name==response.text);
+                        convo.say(`Right, I\'ll fetch issues by Fix Version ${fixVersion.name}. Please wait...`);
+                        services.jiraService.findDFMIssues(fixVersion.name).then((issues)=>{
 
-                            convo.ask({
-                                text: "Here is the list of issues. Please type 'agree' to continue",
+                            convo.say({
+                                text: "Here is the list of issues.",
                                 attachments: issues.map((issue) => ({
                                     "pretext": issue.summary,
                                     "title": issue.title,
                                     "title_link": issue.title_link
                                 }))
-                            }, [{
+                            });
+                            convo.ask("Please type 'agree' to create presentation", [{
                                 pattern: '^agree$',
                                 callback: function (response, convo) {
                                     convo.say("Presentation is preparing. Please wait...");
@@ -64,7 +65,7 @@ module.exports = function(skill, info, bot, message, senti, services) {
                                     convo.say('See you next time!');
                                     convo.next();
                                 }
-                            }]);
+                            }])
                             convo.next();
                         });
                     }

@@ -33,26 +33,23 @@ class JiraService {
                     if (error) {
                         reject(error)
                     } else {
-                        var issues = response.issues.map((issue)=>{
-                            return {
-                                id: issue.id,
-                                title: "TEST",
-                                title_link: issue.self + "?expand=changelog",
-                                summary: issue.fields.summary,
-                                // description: issues.fields.description
-                            };
-                        });
+                        var issues = response.issues.map(issue=>({
+                            id: issue.id,
+                            title: "TEST",
+                            title_link: this.buildIssueLink(issue.key),
+                            summary: issue.fields.summary,
+                            // description: issues.fields.description
+                        }));
                         resolve(issues);
                     }
                 })
         });
     }
 
-    buildIssueLink (issueKey) {
+    buildIssueLink(issueKey) {
         let base = '/browse/';
-            // Strip preceeding and trailing forward slash
-            base = `https://lvserv01.logivations.com/browse/${base}`;
-        return `${this.config.jira.protocol}://${this.config.jira.host}:${this.config.jira.port}${base}${issueKey}`;
+        // Strip preceeding and trailing forward slash
+        return `https://lvserv01.logivations.com/browse/${base}`;
     }
 
     getAllVersions() {
