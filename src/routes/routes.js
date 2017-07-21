@@ -6,7 +6,6 @@ module.exports = function(app) {
     //root
     app.get('/', function(req, res) {
         console.log("root");
-
         res.render('root'); // load view/root.html file
     });
 

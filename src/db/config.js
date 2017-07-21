@@ -11,14 +11,14 @@ class DataManager {
     }
 
     addNewPresentation() {
-
+        this.presentation.allSync();
     }
 
     scheduleEvent() {
-
+        this.scheduler.allSync();
     }
 
 
 }
 
-module.exports.default = DataManager;
+module.exports = DataManager;

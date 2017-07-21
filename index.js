@@ -7,6 +7,8 @@ var Brain = require('./src/nlp/brain');
 var Ears = require('./src/nlp/ears');
 var ServiceProvider = require('./src/services/ServiceProvider');
 var builtinPhrases = require('./builtins');
+var DataManager = require('./src/db/config');
+var db = new DataManager();
 
 var routes = require("./src/routes/routes");
 
@@ -55,6 +57,7 @@ Bottie.Ears
         routes(webserver);
 
     })
+    .listen(db)
     .hear('!TRAIN', function (speech, message) {
         console.log('Delegating to on-the-fly training module...');
         Train(Bottie.Brain, speech, message);
@@ -65,7 +68,7 @@ Bottie.Ears
         console.log('DFM Assitant interpretation: ', interpretation);
         if (interpretation.guess) {
             console.log('Invoking skill: ' + interpretation.guess);
-            Bottie.Brain.invoke(interpretation.guess, interpretation, speech, message, Bottie.Services);
+            Bottie.Brain.invoke(interpretation.guess, interpretation, speech, message, db, Bottie.Services);
         } else {
             speech.reply(message, 'Hmm... I don\'t have a response what you said... I\'ll save it and try to learn about it later.');
             // speech.reply(message, '```\n' + JSON.stringify(interpretation) + '\n```');
@@ -121,7 +124,7 @@ Bottie.Ears
             // For debugging
             bot.reply(message, 'The callback ID has not been defined');
     }
-}).listen();
+}).listen(db);
 
 function eachKey(object, callback) {
     Object.keys(object).forEach(function(key) {
