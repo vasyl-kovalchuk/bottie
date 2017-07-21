@@ -42,6 +42,7 @@ module.exports = function(skill, info, bot, message, senti, services) {
                                             {
                                                 pattern: '^yes$',
                                                 callback: function (response, convo) {
+
                                                     bot.say({
                                                         text: `Hi All! Here is the link for the next DFM on ${fixVersion.releasedDate} \n Please follow the link below ${link} \nSpeakers, feel free to fill the slides`,
                                                         channel: ''
