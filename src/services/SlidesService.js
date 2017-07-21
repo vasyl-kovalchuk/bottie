@@ -20,7 +20,7 @@ class SlidesService {
 
     writeSlidesTemplate(version,date){
         return new Promise(function (resolve,reject) {
-            fs.writeFile(`resources/slides.md`, "" +
+            fs.writeFile(`res/slides.md`, "" +
                 "---\n" +
                 "# This is a title slide\n" +
                 "##Version " + version +"\n"+
