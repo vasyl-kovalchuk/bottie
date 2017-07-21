@@ -50,11 +50,8 @@ Bottie.Ears
         webserver.set('view engine', 'ejs');
         // routes
         routes(webserver);
-        //port for Heroku
-        webserver.set('port', (process.env.PORT));
 
     })
-    .listen()
     .hear('!TRAIN', function (speech, message) {
         console.log('Delegating to on-the-fly training module...');
         Train(Bottie.Brain, speech, message);
@@ -75,7 +72,7 @@ Bottie.Ears
                 console.log('\n\tBrain Err: Appending phrase for review\n\t\t' + message.text + '\n');
             });
         }
-    }).hear(['test button'], function (bot, message) {
+    }).hear('test', function (bot, message) {
         var testButtonReply = {
             username: 'Button Bot',
             text: 'This is a test message with a button',
@@ -121,7 +118,7 @@ Bottie.Ears
             // For debugging
             bot.reply(message, 'The callback ID has not been defined');
     }
-});
+}).listen();
 
 function eachKey(object, callback) {
     Object.keys(object).forEach(function(key) {

@@ -23,7 +23,7 @@ Brain.prototype.think = function() {
   this.classifier.train();
 
   // save the classifier for later use
-  var aPath = './src/nlp/classifier.json';
+  var aPath = './classifier.json';
   this.classifier.save(aPath, function(err, classifier) {
     // the classifier is saved to the classifier.json file!
     console.log('Writing: Creating a Classifier file in SRC.');
@@ -54,7 +54,7 @@ Brain.prototype.invoke = function(skill, info, bot, message) {
 
   console.log('Grabbing code for skill: ' + skill);
   try {
-    skillCode = require('../skills/' + skill);
+    skillCode = require('../../skills/' + skill);
   } catch (err) {
     throw new Error('The invoked skill doesn\'t exist!');
   }

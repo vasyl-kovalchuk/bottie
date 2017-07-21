@@ -16,10 +16,12 @@ class Ears {
 
         this.controller = BotKit.slackbot({
             debug: false,
+            storage: undefined,
             interactive_replies: true, // tells botkit to send button clicks into conversations
             json_file_store: './config/',
             redirectUri: process.env.SLACK_REDIRECT,
-        }).configureSlackApp(
+        });
+        this.controller.configureSlackApp(
             {
                 clientId: process.env.SLACK_ID,
                 clientSecret: process.env.SLACK_SECRET,
@@ -36,6 +38,8 @@ class Ears {
         this.controller.setupWebserver(process.env.PORT, (err,webserver)=> {
 
             callback(webserver);
+
+            this.controller.createHomepageEndpoint( this.controller.webserver);
 
             this.controller.createWebhookEndpoints(this.controller.webserver);
 
@@ -91,27 +95,22 @@ class Ears {
         this._bots[bot.config.token] = bot;
     }
 
-    listen(db) {
+    listen() {
         //REQUIRED FOR INTERACTIVE MESSAGES
-        this.controller.storage.teams.all((err, teams) => {
-
-            if (err) {
-                throw new Error(err);
+        this.bot = this.controller.spawn({
+            token: process.env.SLACK_TOKEN
+        }).startRTM((err) => {
+            if (!err) {
+                this._trackBot(this.bot);
             }
-
-            // connect all teams with bots up to slack!
-            for (var t  in teams) {
-                if (teams[t].bot) {
-                    this.controller.spawn(teams[t]).startRTM(function (err, bot) {
-                        if (err) {
-                            console.log('Error connecting bot to Slack:', err);
-                        } else {
-                            console.log(bot);
-                            this._trackBot(bot);
-                        }
-                    });
+            this.bot.startPrivateConversation({user: this.bot.config.createdBy},function(err,convo) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    convo.say('I am a DFM bot that has just joined your team');
+                    convo.say('You must now /invite me to a channel so that I can be of use!');
                 }
-            }
+            });
         });
         return this;
 
