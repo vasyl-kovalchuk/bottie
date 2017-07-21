@@ -1,1 +1,30 @@
-{}
+{
+  "Help": [
+    "Help",
+    "help me",
+    "what can you do",
+    "how can you help me",
+    "what are your features",
+    "show me your functionality"
+  ],
+  "SecretHug": [
+    "hug",
+    "send hug",
+    "want hug",
+    "pls hug"
+  ],
+  "Restart": [
+    "turn off",
+    "stop work",
+    "shut down"
+  ],
+  "Google": [
+    "google"
+  ],
+  "Backup": [
+    "commit yourself",
+    "backup yourself",
+    "commit to git",
+    "Backup"
+  ]
+}
